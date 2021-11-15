@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.17",
+    "cloudinary-build-url": "^0.2.1",
     "deepmerge": "^4.2.2",
     "graphql": "^16.0.1",
     "graphql-tools": "^8.2.0",
