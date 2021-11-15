@@ -15,7 +15,7 @@ const LoginQuery = gql`
   }
 `
 
-const Index: NextPage = () => {
+const Login: NextPage = () => {
   const router = useRouter()
   const [login] = useMutation(LoginQuery)
 
@@ -35,4 +35,4 @@ const Index: NextPage = () => {
   )
 }
 
-export default Index
+export default Login
