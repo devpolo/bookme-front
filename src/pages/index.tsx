@@ -4,7 +4,6 @@ import { useRouter } from "next/dist/client/router"
 import { useForm } from "react-hook-form"
 
 import Page from "components/global/Page"
-import { Container, Side } from "styles/Login.style"
 
 import { buildUrl, useAuth } from "libs"
 
@@ -13,8 +12,6 @@ const isDev = process.env.ENVIRONMENT === "dev"
 interface IInputs {
   name: string
 }
-
-// image cloudinary key: v1636994297/consensys/pexels-elizabeth-zernetska-9409789.jpg
 
 const img = buildUrl(
   "v1636994297/consensys/pexels-elizabeth-zernetska-9409789.jpg",
@@ -40,8 +37,8 @@ const Login: NextPage = () => {
 
   return (
     <Page>
-      <Container>
-        <Side>
+      <div className='container'>
+        <div className='col'>
           <h1>Login </h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
@@ -51,11 +48,11 @@ const Login: NextPage = () => {
             {errors.name && <span>This field is required</span>}
             <input type='submit' title='Login' />
           </form>
-        </Side>
-        <Side hidedOnMobile>
+        </div>
+        <div className='col hide-mobile'>
           <img src={img} alt='meeting room' />
-        </Side>
-      </Container>
+        </div>
+      </div>
     </Page>
   )
 }
