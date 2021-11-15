@@ -20,11 +20,11 @@ const Login: NextPage = () => {
   const [login] = useMutation(LoginQuery)
 
   const onLogin = async () => {
-    const res = await login({ variables: { name: "paul" } })
+    try {
+      await login({ variables: { name: "paul" } })
 
-    console.log(res.data)
-
-    router.push("/")
+      router.push("/")
+    } catch (error) {}
   }
 
   return (
