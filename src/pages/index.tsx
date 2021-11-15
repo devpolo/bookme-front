@@ -2,7 +2,7 @@ import type { NextPage } from "next"
 
 import { useRouter } from "next/dist/client/router"
 import { useForm } from "react-hook-form"
-import { Col, Row } from "antd"
+import { Col, Image, Row } from "antd"
 
 import Page from "components/global/Page"
 
@@ -51,7 +51,11 @@ const Login: NextPage = () => {
           </form>
         </Col>
         <Col span={12}>
-          <img src={img} alt='meeting room' />
+          <Image
+            preview={false}
+            src={img}
+            style={{ height: "100vh", width: "50vw", objectFit: "cover" }}
+          />
         </Col>
       </Row>
     </Page>
