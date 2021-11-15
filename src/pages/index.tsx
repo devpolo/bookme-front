@@ -2,6 +2,7 @@ import type { NextPage } from "next"
 
 import { useRouter } from "next/dist/client/router"
 import { useForm } from "react-hook-form"
+import { Col, Row } from "antd"
 
 import Page from "components/global/Page"
 
@@ -37,8 +38,8 @@ const Login: NextPage = () => {
 
   return (
     <Page>
-      <div className='container'>
-        <div className='col'>
+      <Row>
+        <Col span={12}>
           <h1>Login </h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
@@ -48,11 +49,11 @@ const Login: NextPage = () => {
             {errors.name && <span>This field is required</span>}
             <input type='submit' title='Login' />
           </form>
-        </div>
-        <div className='col hide-mobile'>
+        </Col>
+        <Col span={12}>
           <img src={img} alt='meeting room' />
-        </div>
-      </div>
+        </Col>
+      </Row>
     </Page>
   )
 }
