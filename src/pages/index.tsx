@@ -1,10 +1,10 @@
 import type { NextPage } from "next"
 
-import Head from "next/head"
-
 import gql from "graphql-tag"
 import { useMutation } from "@apollo/client"
 import { useRouter } from "next/dist/client/router"
+
+import Page from "../components/global/Page"
 
 const LoginQuery = gql`
   mutation login($name: String!) {
@@ -28,10 +28,10 @@ const Login: NextPage = () => {
   }
 
   return (
-    <div>
+    <Page>
       <h1>Login </h1>
       <button onClick={onLogin}>login</button>
-    </div>
+    </Page>
   )
 }
 
