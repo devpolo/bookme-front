@@ -38,8 +38,8 @@ const Login: NextPage = () => {
 
   return (
     <Page>
-      <Row>
-        <Col span={12}>
+      <Row justify='center' align='middle'>
+        <Col xs={22} md={10} offset={2}>
           <h1>Login </h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
@@ -50,7 +50,7 @@ const Login: NextPage = () => {
             <input type='submit' title='Login' />
           </form>
         </Col>
-        <Col span={12}>
+        <Col xs={0} md={12}>
           <Image
             preview={false}
             src={img}
