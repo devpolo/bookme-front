@@ -21,7 +21,8 @@ const Login: NextPage = () => {
 
   const onLogin = async () => {
     try {
-      await login({ variables: { name: "paul" } })
+      await login()
+      // await login({ variables: { name: "paul" } })
 
       router.push("/")
     } catch (error) {}
