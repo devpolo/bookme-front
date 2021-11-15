@@ -4,6 +4,8 @@ import gql from "graphql-tag"
 import { useMutation } from "@apollo/client"
 import { useRouter } from "next/dist/client/router"
 
+import { useForm } from "react-hook-form"
+
 import Page from "../components/global/Page"
 
 const LoginQuery = gql`
@@ -15,23 +17,36 @@ const LoginQuery = gql`
   }
 `
 
+interface ILoginUser {
+  name: string
+}
+
 const Login: NextPage = () => {
-  const router = useRouter()
   const [login] = useMutation(LoginQuery)
+  const router = useRouter()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
 
-  const onLogin = async () => {
+  const onSubmit = async (variables: ILoginUser) => {
+    console.log(variables)
     try {
-      await login()
-      // await login({ variables: { name: "paul" } })
+      await login({ variables })
 
-      router.push("/")
+      // router.push("/")
     } catch (error) {}
   }
 
   return (
     <Page>
       <h1>Login </h1>
-      <button onClick={onLogin}>login</button>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input {...register("name", { required: true })} />
+        {errors.name && <span>This field is required</span>}
+        <input type='submit' title='Login' />
+      </form>
     </Page>
   )
 }
