@@ -40,7 +40,7 @@ const Login: NextPage = () => {
     <Page>
       <Row justify='center' align='middle'>
         <Col xs={22} md={10} offset={2}>
-          <h1>Login </h1>
+          <h1>Login</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
               defaultValue={isDev ? "paul" : ""}

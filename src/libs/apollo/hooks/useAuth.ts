@@ -29,12 +29,20 @@ export const useAuth = () => {
     } catch {}
   }
 
+  const logout = async () => {
+    try {
+      connectedUser({})
+      router.push("/")
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const user = connectedUser()
   useEffect(() => {
-    const user = connectedUser()
     if (Object.keys(user).length === 0) {
       router.push("/")
     }
-  }, [connectedUser()])
+  }, [user])
 
-  return { me: connectedUser(), login }
+  return { me: connectedUser(), login, logout }
 }
