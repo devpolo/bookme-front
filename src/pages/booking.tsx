@@ -1,20 +1,24 @@
 import type { NextPage } from "next"
 
-import Page from "../components/global/Page"
+import { Typography, Button } from "antd"
+
 import { useAuth } from "../libs"
+
+import Page from "../components/global/Page"
+
+const { Text, Title, Paragraph } = Typography
 
 const Booking: NextPage = () => {
   const { me, logout } = useAuth()
 
-  const onclick = () => {
-    console.log(me)
-  }
-
   return (
     <Page>
-      <h1>Booking</h1>
-      <button onClick={onclick}>press</button>
-      <button onClick={logout}>Logout</button>
+      <Title>Booking</Title>
+      <Paragraph ellipsis={true}>{JSON.stringify(me, null, 2)}</Paragraph>
+
+      <Button danger onClick={logout}>
+        Logout
+      </Button>
     </Page>
   )
 }
