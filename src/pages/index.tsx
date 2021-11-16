@@ -1,14 +1,12 @@
 import type { NextPage } from "next"
 
 import { useRouter } from "next/dist/client/router"
-import { useForm } from "react-hook-form"
-import { Col, Image, Row } from "antd"
 
-import Page from "components/global/Page"
+import { Col, Image, Row, Form, Input, Button, Typography } from "antd"
 
 import { buildUrl, useAuth } from "libs"
 
-const isDev = process.env.ENVIRONMENT === "dev"
+import Page from "components/global/Page"
 
 interface IInputs {
   name: string
@@ -21,15 +19,10 @@ const img = buildUrl(
 
 const Login: NextPage = () => {
   const router = useRouter()
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm()
 
   const { login } = useAuth()
 
-  const onSubmit = async ({ name }: IInputs) => {
+  const onFinish = async ({ name }: IInputs) => {
     try {
       await login(name)
       router.push("/booking")
@@ -39,16 +32,31 @@ const Login: NextPage = () => {
   return (
     <Page>
       <Row justify='center' align='middle'>
-        <Col xs={22} md={10} offset={2}>
-          <h1>Login</h1>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <input
-              defaultValue={isDev ? "paul" : ""}
-              {...register("name", { required: true })}
-            />
-            {errors.name && <span>This field is required</span>}
-            <input type='submit' title='Login' />
-          </form>
+        <Col xs={24} md={12}>
+          <div style={{ margin: 100, marginBottom: 200 }}>
+            <Typography.Title>Login</Typography.Title>
+
+            <Form
+              name='login'
+              layout='vertical'
+              initialValues={{ remember: true }}
+              onFinish={onFinish}
+              autoComplete='off'
+            >
+              <Form.Item
+                label='Name'
+                name='name'
+                rules={[{ required: true, message: "Please input your name!" }]}
+              >
+                <Input placeholder='Your name' />
+              </Form.Item>
+              <Form.Item>
+                <Button type='primary' htmlType='submit'>
+                  Login
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
         </Col>
         <Col xs={0} md={12}>
           <Image
