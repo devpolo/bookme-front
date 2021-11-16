@@ -1,6 +1,7 @@
 import type { NextPage } from "next"
 
-import { Typography, Button } from "antd"
+import { Typography, Button, Space } from "antd"
+import ReactJson from "react-json-view"
 
 import { useAuth } from "../libs"
 
@@ -13,12 +14,14 @@ const Booking: NextPage = () => {
 
   return (
     <Page>
-      <Title>Booking</Title>
-      <Paragraph ellipsis={true}>{JSON.stringify(me, null, 2)}</Paragraph>
+      <Space direction='vertical' size='large' style={{ margin: 100 }}>
+        <Title>Booking</Title>
 
-      <Button danger onClick={logout}>
-        Logout
-      </Button>
+        <ReactJson src={me} />
+        <Button danger onClick={logout}>
+          Logout
+        </Button>
+      </Space>
     </Page>
   )
 }
