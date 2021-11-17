@@ -1,5 +1,7 @@
-import "react-toastify/dist/ReactToastify.css"
 import "antd/dist/antd.css"
+import "react-toastify/dist/ReactToastify.css"
+import "react-big-calendar/lib/css/react-big-calendar.css"
+import "react-big-calendar/lib/addons/dragAndDrop/styles.css"
 
 import type { AppProps } from "next/app"
 

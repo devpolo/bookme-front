@@ -1,13 +1,14 @@
 import type { NextPage } from "next"
 
-import { Typography, Button, Space } from "antd"
+import { Typography, Space, Button } from "antd"
+
 import ReactJson from "react-json-view"
 
 import { useAuth } from "../libs"
 
 import Page from "../components/global/Page"
 
-const { Text, Title, Paragraph } = Typography
+const { Title } = Typography
 
 const Booking: NextPage = () => {
   const { me, logout } = useAuth()
