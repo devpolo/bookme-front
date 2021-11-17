@@ -2,7 +2,7 @@ import type { NextPage } from "next"
 
 import { Typography, Space, Button } from "antd"
 
-import { useAuth } from "../libs"
+import { useAuth, useQueryRooms } from "libs"
 import { Page, Calendar } from "components"
 
 const { Title, Text } = Typography

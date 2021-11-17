@@ -36,7 +36,7 @@ export type CreateBookingInput = {
 };
 
 export type CreateRoomInput = {
-  name: Scalars['String'];
+  title: Scalars['String'];
 };
 
 export type CreateUserInput = {
@@ -134,7 +134,7 @@ export type Room = {
   __typename?: 'Room';
   bookings?: Maybe<Array<Booking>>;
   id: Scalars['Int'];
-  name: Scalars['String'];
+  title: Scalars['String'];
 };
 
 export type UpdateBookingInput = {

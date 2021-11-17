@@ -1,7 +1,10 @@
+import { Spin } from "antd"
+
 import { Calendar as Cal, dateFnsLocalizer, Event } from "react-big-calendar"
 
 import { format, parse, startOfWeek, getDay } from "date-fns"
 import enUS from "date-fns/locale/en-US"
+import { useQueryRooms } from "libs"
 
 interface IEvent extends Event {
   resourceId?: number
@@ -42,18 +45,9 @@ const events: IEvent[] = [
   },
 ]
 
-const resources = [
-  {
-    id: 1,
-    title: "room 1",
-  },
-  {
-    id: 2,
-    title: "room 2",
-  },
-]
-
 const Calendar = () => {
+  const { data, loading } = useQueryRooms()
+
   const onDoubleClickEvent = (e: any) => {
     console.log("onDoubleClickEvent", e)
   }
@@ -68,11 +62,14 @@ const Calendar = () => {
   // @ts-ignore
   // const DnDCalendar = withDragAndDrop(Calendar)
 
+  if (loading || !data || !Array.isArray(data.rooms)) return <Spin />
+  if (!data.rooms.length) return <p>No rooms to display</p>
+
   return (
     <Cal
-      resources={resources}
+      resources={data?.rooms}
       selectable
-      defaultView='week'
+      defaultView='day'
       events={events}
       localizer={localizer}
       onDoubleClickEvent={onDoubleClickEvent}

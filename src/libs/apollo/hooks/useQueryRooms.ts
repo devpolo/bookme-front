@@ -1,14 +1,11 @@
-import { useEffect } from "react"
-
-import { useRouter } from "next/dist/client/router"
-
 import { gql, useQuery } from "@apollo/client"
+import { Query, Room } from "typescript"
 
 const QUERY_ROOMS = gql`
   query {
     rooms {
       id
-      name
+      title
       bookings {
         id
       }
@@ -16,9 +13,10 @@ const QUERY_ROOMS = gql`
   }
 `
 
-export const useAuth = () => {
-  const { data } = useQuery(QUERY_ROOMS)
-  const router = useRouter()
+interface IRoomsData {
+  rooms: Room[]
+}
 
-  return {}
+export const useQueryRooms = () => {
+  return useQuery<IRoomsData>(QUERY_ROOMS)
 }
