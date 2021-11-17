@@ -4,7 +4,9 @@ import { useRouter } from "next/dist/client/router"
 
 import { makeVar, ReactiveVar, gql, useMutation } from "@apollo/client"
 
-type TUser = { id: number; name: string } | {}
+import { User } from "typescript"
+
+type TUser = User | {}
 
 const LOGIN_MUTATION = gql`
   mutation login($name: String!) {
