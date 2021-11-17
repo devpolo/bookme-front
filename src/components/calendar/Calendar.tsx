@@ -57,20 +57,28 @@ const Calendar = () => {
   const onDoubleClickEvent = (e: any) => {
     console.log("onDoubleClickEvent", e)
   }
+
+  const onSelectEvent = (e: any) => {
+    console.log("onSelectEvent", e)
+  }
+
+  const onSelectSlot = (e: any) => {
+    console.log("onSelectSlot", e)
+  }
   // @ts-ignore
   // const DnDCalendar = withDragAndDrop(Calendar)
 
   return (
     <Cal
       resources={resources}
-      // startAccessor='start'
-      // endAccessor='end'
       selectable
       defaultView='week'
       events={events}
       localizer={localizer}
       onDoubleClickEvent={onDoubleClickEvent}
-      style={{ height: "80vh" }}
+      onSelectEvent={onSelectEvent}
+      onSelectSlot={onSelectSlot}
+      style={{ height: "40vh", width: "80vw" }}
     />
   )
 }

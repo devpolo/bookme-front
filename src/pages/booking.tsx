@@ -2,13 +2,10 @@ import type { NextPage } from "next"
 
 import { Typography, Space, Button } from "antd"
 
-import ReactJson from "react-json-view"
-
 import { useAuth } from "../libs"
+import { Page, Calendar } from "components"
 
-import Page from "../components/global/Page"
-
-const { Title } = Typography
+const { Title, Text } = Typography
 
 const Booking: NextPage = () => {
   const { me, logout } = useAuth()
@@ -17,11 +14,14 @@ const Booking: NextPage = () => {
     <Page>
       <Space direction='vertical' size='large' style={{ margin: 100 }}>
         <Title>Booking</Title>
-
-        <ReactJson src={me} />
+        <Text>
+          {/* @ts-ignore */}
+          Hello <b>{me.name}</b>. Your id is: <b>{me.id}</b>.
+        </Text>
         <Button danger onClick={logout}>
           Logout
         </Button>
+        <Calendar />
       </Space>
     </Page>
   )
