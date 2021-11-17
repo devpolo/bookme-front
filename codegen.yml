@@ -1,0 +1,8 @@
+schema: ${NEXT_PUBLIC_API_URL:http://localhost:8000/graphql}
+overwrite: true
+generates:
+  src/typescript/api/auto-generated.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
