@@ -6,6 +6,7 @@ import moment from "moment"
 
 import { Booking } from "typescript"
 import { useMutation, gql } from "@apollo/client"
+import { QUERY_BOOKINGS } from "libs"
 
 const EDIT_BOOKING_MUTATION = gql`
   mutation updateBooking(
@@ -17,20 +18,19 @@ const EDIT_BOOKING_MUTATION = gql`
     $id: Float!
   ) {
     updateBooking(
-      title: $title
-      start: $start
-      end: $end
-      roomId: $roomId
-      userId: $userId
-      id: $id
+      updateBookingInput: {
+        title: $title
+        start: $start
+        end: $end
+        roomId: $roomId
+        userId: $userId
+        id: $id
+      }
     ) {
       id
       roomId
       userId
       title
-      end
-      start
-      resourceId @client
     }
   }
 `
@@ -47,13 +47,30 @@ const Calendar = ({
   setIsModalOpen,
   ...props
 }: ICalendarProps) => {
-  const [updateBooking] = useMutation(EDIT_BOOKING_MUTATION)
+  const [updateBooking] = useMutation(EDIT_BOOKING_MUTATION, {
+    refetchQueries: [{ query: QUERY_BOOKINGS }],
+  })
 
   const onFinish = async (values: any) => {
-    console.log("values", values)
-    await updateBooking({ variables: values })
-    setIsModalOpen(false)
-    setVariables(undefined)
+    try {
+      console.log("values", values)
+      const res = await updateBooking({
+        variables: {
+          id: 1,
+          userId: 1,
+          roomId: 1,
+          title: "Meeting",
+          end: new Date().getTime(),
+          start: new Date().getTime(),
+          ...values,
+        },
+      })
+      console.log("res", res)
+      setIsModalOpen(false)
+      setVariables(undefined)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
