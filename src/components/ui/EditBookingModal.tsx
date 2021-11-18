@@ -96,7 +96,13 @@ const Calendar = ({
 
   return (
     <>
-      <Modal title='Edit your booking infos' centered {...props} footer={null}>
+      <Modal
+        title='Edit your booking infos'
+        centered
+        {...props}
+        footer={null}
+        afterClose={() => setVariables(undefined)}
+      >
         <Form
           name='booking'
           onFinish={onFinish}
