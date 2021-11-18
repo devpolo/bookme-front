@@ -6,6 +6,7 @@ import { format, parse, startOfWeek, getDay } from "date-fns"
 import enUS from "date-fns/locale/en-US"
 
 import { useQueryBookings, useQueryRooms } from "libs"
+import { EditBookingModal } from "components/ui"
 
 const locales = {
   "en-US": enUS,
@@ -45,17 +46,20 @@ const Calendar = () => {
   console.log("bookings:", bookings.bookings)
 
   return (
-    <Cal
-      resources={rooms?.rooms}
-      selectable
-      defaultView='day'
-      events={bookings?.bookings}
-      localizer={localizer}
-      onDoubleClickEvent={onDoubleClickEvent}
-      onSelectEvent={onSelectEvent}
-      onSelectSlot={onSelectSlot}
-      style={{ height: "40vh", width: "80vw" }}
-    />
+    <>
+      <EditBookingModal />
+      <Cal
+        resources={rooms?.rooms}
+        selectable
+        defaultView='day'
+        events={bookings?.bookings}
+        localizer={localizer}
+        onDoubleClickEvent={onDoubleClickEvent}
+        onSelectEvent={onSelectEvent}
+        onSelectSlot={onSelectSlot}
+        style={{ height: "40vh", width: "80vw" }}
+      />
+    </>
   )
 }
 
