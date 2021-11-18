@@ -7,10 +7,10 @@ import enUS from "date-fns/locale/en-US"
 
 import { useQueryBookings, useQueryRooms } from "libs"
 import { EditBookingModal } from "components/ui"
+import { useState } from "react"
+import { Booking } from "typescript"
 
-const locales = {
-  "en-US": enUS,
-}
+const locales = { "en-US": enUS }
 
 const localizer = dateFnsLocalizer({
   format,
@@ -24,16 +24,25 @@ const Calendar = () => {
   const { data: rooms, loading: loadingRooms } = useQueryRooms()
   const { data: bookings, loading: loadingBookings } = useQueryBookings()
 
-  const onDoubleClickEvent = (e: any) => {
-    console.log("onDoubleClickEvent", e)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [variables, setVariables] = useState<Booking | undefined>(undefined)
+
+  const onDoubleClickEvent = (event: Booking) => {
+    setIsModalOpen(true)
+    setVariables(event)
   }
 
-  const onSelectEvent = (e: any) => {
-    console.log("onSelectEvent", e)
-  }
+  // const onSelectEvent = (e: any) => {
+  //   console.log("onSelectEvent", e)
+  // }
 
   const onSelectSlot = (e: any) => {
     console.log("onSelectSlot", e)
+    // onOpenModal()
+  }
+
+  const onOk = (e?: any) => {
+    setIsModalOpen(false)
   }
 
   if (loadingRooms || !rooms || !Array.isArray(rooms.rooms)) return <Spin />
@@ -47,7 +56,13 @@ const Calendar = () => {
 
   return (
     <>
-      <EditBookingModal />
+      <EditBookingModal
+        onOk={onOk}
+        visible={isModalOpen}
+        closable
+        onCancel={() => setIsModalOpen(false)}
+        variables={variables}
+      />
       <Cal
         resources={rooms?.rooms}
         selectable
@@ -55,7 +70,7 @@ const Calendar = () => {
         events={bookings?.bookings}
         localizer={localizer}
         onDoubleClickEvent={onDoubleClickEvent}
-        onSelectEvent={onSelectEvent}
+        // onSelectEvent={onSelectEvent}
         onSelectSlot={onSelectSlot}
         style={{ height: "40vh", width: "80vw" }}
       />
