@@ -8,6 +8,12 @@ import { User } from "typescript"
 
 type TUser = User | {}
 
+interface IAuthHookResponse {
+  me: User
+  login: (name: string) => void
+  logout: () => void
+}
+
 const LOGIN_MUTATION = gql`
   mutation login($name: String!) {
     login(name: $name) {
@@ -19,7 +25,7 @@ const LOGIN_MUTATION = gql`
 
 const connectedUser: ReactiveVar<TUser> = makeVar({})
 
-export const useAuth = () => {
+export const useAuth = (): IAuthHookResponse => {
   const [readOrCreateUser] = useMutation(LOGIN_MUTATION)
   const router = useRouter()
 
@@ -46,5 +52,6 @@ export const useAuth = () => {
     }
   }, [user])
 
+  // @ts-ignore
   return { me: connectedUser(), login, logout }
 }

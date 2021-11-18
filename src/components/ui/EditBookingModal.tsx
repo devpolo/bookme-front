@@ -6,9 +6,9 @@ import moment from "moment"
 
 import { Booking } from "typescript"
 import { useMutation, gql } from "@apollo/client"
-import { QUERY_BOOKINGS } from "libs"
+import { QUERY_BOOKINGS, useAuth } from "libs"
 
-const EDIT_BOOKING_MUTATION = gql`
+export const EDIT_BOOKING_MUTATION = gql`
   mutation updateBooking(
     $title: String
     $start: DateTime
@@ -47,30 +47,25 @@ const Calendar = ({
   setIsModalOpen,
   ...props
 }: ICalendarProps) => {
+  const { me } = useAuth()
+
   const [updateBooking] = useMutation(EDIT_BOOKING_MUTATION, {
     refetchQueries: [{ query: QUERY_BOOKINGS }],
   })
 
   const onFinish = async (values: any) => {
     try {
-      console.log("values", values)
-      const res = await updateBooking({
+      await updateBooking({
         variables: {
-          id: 1,
-          userId: 1,
-          roomId: 1,
-          title: "Meeting",
-          end: new Date().getTime(),
-          start: new Date().getTime(),
+          ...variables,
           ...values,
+          userId: me.id,
         },
       })
-      console.log("res", res)
+
       setIsModalOpen(false)
       setVariables(undefined)
-    } catch (error) {
-      console.error(error)
-    }
+    } catch {}
   }
 
   return (
@@ -96,7 +91,7 @@ const Calendar = ({
           </Form.Item>
           <Form.Item>
             <Button type='primary' htmlType='submit'>
-              Submit
+              Update
             </Button>
           </Form.Item>
         </Form>
