@@ -45,6 +45,7 @@ const Calendar = ({ rooms, bookings }: ICalendarProps) => {
         onCancel={() => setIsModalOpen(false)}
       />
       <Cal
+        views={["day", "week"]}
         resources={rooms}
         selectable
         defaultView='day'
