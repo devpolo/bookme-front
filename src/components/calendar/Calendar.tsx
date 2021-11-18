@@ -32,17 +32,8 @@ const Calendar = () => {
     setVariables(event)
   }
 
-  // const onSelectEvent = (e: any) => {
-  //   console.log("onSelectEvent", e)
-  // }
-
   const onSelectSlot = (e: any) => {
     console.log("onSelectSlot", e)
-    // onOpenModal()
-  }
-
-  const onOk = (e?: any) => {
-    setIsModalOpen(false)
   }
 
   if (loadingRooms || !rooms || !Array.isArray(rooms.rooms)) return <Spin />
@@ -52,16 +43,14 @@ const Calendar = () => {
     return <Spin />
   if (!bookings.bookings.length) return <p>No bookings to display</p>
 
-  console.log("bookings:", bookings.bookings)
-
   return (
     <>
       <EditBookingModal
-        onOk={onOk}
-        visible={isModalOpen}
-        closable
-        onCancel={() => setIsModalOpen(false)}
         variables={variables}
+        setVariables={setVariables}
+        visible={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        onCancel={() => setIsModalOpen(false)}
       />
       <Cal
         resources={rooms?.rooms}
@@ -70,7 +59,6 @@ const Calendar = () => {
         events={bookings?.bookings}
         localizer={localizer}
         onDoubleClickEvent={onDoubleClickEvent}
-        // onSelectEvent={onSelectEvent}
         onSelectSlot={onSelectSlot}
         style={{ height: "40vh", width: "80vw" }}
       />
