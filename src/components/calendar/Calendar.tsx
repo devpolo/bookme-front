@@ -4,7 +4,8 @@ import { Calendar as Cal, dateFnsLocalizer, Event } from "react-big-calendar"
 
 import { format, parse, startOfWeek, getDay } from "date-fns"
 import enUS from "date-fns/locale/en-US"
-import { useQueryRooms } from "libs"
+
+import { useQueryBookings, useQueryRooms } from "libs"
 
 interface IEvent extends Event {
   resourceId?: number
@@ -46,7 +47,8 @@ const events: IEvent[] = [
 ]
 
 const Calendar = () => {
-  const { data, loading } = useQueryRooms()
+  const { data: rooms, loading: loadingRooms } = useQueryRooms()
+  const { data: bookings, loading: loadingBookings } = useQueryBookings()
 
   const onDoubleClickEvent = (e: any) => {
     console.log("onDoubleClickEvent", e)
@@ -62,17 +64,21 @@ const Calendar = () => {
   // @ts-ignore
   // const DnDCalendar = withDragAndDrop(Calendar)
 
-  if (loading || !data || !Array.isArray(data.rooms)) return <Spin />
-  if (!data.rooms.length) return <p>No rooms to display</p>
+  if (loadingRooms || !rooms || !Array.isArray(rooms.rooms)) return <Spin />
+  if (!rooms.rooms.length) return <p>No rooms to display</p>
+
+  if (loadingBookings || !bookings || !Array.isArray(bookings.bookings))
+    return <Spin />
+  if (!bookings.bookings.length) return <p>No bookings to display</p>
 
   // console.log("data:", data.rooms)
 
   return (
     <Cal
-      resources={data?.rooms}
+      resources={rooms?.rooms}
       selectable
       defaultView='day'
-      events={events}
+      events={bookings?.bookings}
       localizer={localizer}
       onDoubleClickEvent={onDoubleClickEvent}
       onSelectEvent={onSelectEvent}
