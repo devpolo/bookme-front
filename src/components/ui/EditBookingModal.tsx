@@ -35,6 +35,12 @@ export const EDIT_BOOKING_MUTATION = gql`
   }
 `
 
+export const REMOVE_BOOKING_MUTATION = gql`
+  mutation removeBooking($id: Float!, $userId: Float!) {
+    removeBooking(DeleteBookingInput: { id: $id, userId: $userId })
+  }
+`
+
 interface ICalendarProps extends ModalProps {
   variables?: Booking
   setVariables: Dispatch<SetStateAction<Booking | undefined>>
@@ -53,6 +59,15 @@ const Calendar = ({
     refetchQueries: [{ query: QUERY_BOOKINGS }],
   })
 
+  const [removeBooking] = useMutation(REMOVE_BOOKING_MUTATION, {
+    refetchQueries: [{ query: QUERY_BOOKINGS }],
+  })
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+    setVariables(undefined)
+  }
+
   const onFinish = async (values: any) => {
     try {
       await updateBooking({
@@ -63,8 +78,19 @@ const Calendar = ({
         },
       })
 
-      setIsModalOpen(false)
-      setVariables(undefined)
+      closeModal()
+    } catch {}
+  }
+
+  const deleteBooking = async () => {
+    try {
+      await removeBooking({
+        variables: {
+          id: variables?.id,
+          userId: me.id,
+        },
+      })
+      closeModal()
     } catch {}
   }
 
@@ -94,6 +120,14 @@ const Calendar = ({
               Update
             </Button>
           </Form.Item>
+          <Button
+            type='primary'
+            htmlType='submit'
+            danger
+            onClick={deleteBooking}
+          >
+            Remove
+          </Button>
         </Form>
       </Modal>
     </>
