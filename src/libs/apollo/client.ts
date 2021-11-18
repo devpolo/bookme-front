@@ -41,7 +41,19 @@ function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
     link: ApolloLink.from([errorLink, createIsomorphLink()]),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Room: {
+          fields: {
+            resourceId: {
+              read: (_, { readField }) => {
+                return readField("id")
+              },
+            },
+          },
+        },
+      },
+    }),
   })
 }
 

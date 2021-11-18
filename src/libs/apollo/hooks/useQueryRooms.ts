@@ -1,11 +1,12 @@
 import { gql, useQuery } from "@apollo/client"
-import { Query, Room } from "typescript"
+import { Room } from "typescript"
 
 const QUERY_ROOMS = gql`
-  query {
+  query Rooms {
     rooms {
       id
       title
+      resourceId @client
       bookings {
         id
       }

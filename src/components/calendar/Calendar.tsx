@@ -65,6 +65,8 @@ const Calendar = () => {
   if (loading || !data || !Array.isArray(data.rooms)) return <Spin />
   if (!data.rooms.length) return <p>No rooms to display</p>
 
+  // console.log("data:", data.rooms)
+
   return (
     <Cal
       resources={data?.rooms}
