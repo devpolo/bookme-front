@@ -6,7 +6,6 @@ const QUERY_ROOMS = gql`
     rooms {
       id
       title
-      resourceId @client
       bookings {
         id
       }

@@ -8,6 +8,9 @@ const QUERY_BOOKINGS = gql`
       roomId
       userId
       title
+      end
+      start
+      resourceId @client
     }
   }
 `

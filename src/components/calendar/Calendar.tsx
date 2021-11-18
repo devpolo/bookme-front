@@ -1,15 +1,11 @@
 import { Spin } from "antd"
 
-import { Calendar as Cal, dateFnsLocalizer, Event } from "react-big-calendar"
+import { Calendar as Cal, dateFnsLocalizer } from "react-big-calendar"
 
 import { format, parse, startOfWeek, getDay } from "date-fns"
 import enUS from "date-fns/locale/en-US"
 
 import { useQueryBookings, useQueryRooms } from "libs"
-
-interface IEvent extends Event {
-  resourceId?: number
-}
 
 const locales = {
   "en-US": enUS,
@@ -22,29 +18,6 @@ const localizer = dateFnsLocalizer({
   getDay,
   locales,
 })
-
-const now = new Date()
-const later = now.setHours(now.getHours() + 4)
-const events: IEvent[] = [
-  {
-    title: "1",
-    start: now,
-    end: new Date(later),
-    resourceId: 2,
-  },
-  {
-    title: "2",
-    start: now,
-    end: new Date(later),
-    resourceId: 2,
-  },
-  {
-    title: "3",
-    start: now,
-    end: new Date(later),
-    resourceId: 1,
-  },
-]
 
 const Calendar = () => {
   const { data: rooms, loading: loadingRooms } = useQueryRooms()
@@ -61,8 +34,6 @@ const Calendar = () => {
   const onSelectSlot = (e: any) => {
     console.log("onSelectSlot", e)
   }
-  // @ts-ignore
-  // const DnDCalendar = withDragAndDrop(Calendar)
 
   if (loadingRooms || !rooms || !Array.isArray(rooms.rooms)) return <Spin />
   if (!rooms.rooms.length) return <p>No rooms to display</p>
@@ -71,7 +42,7 @@ const Calendar = () => {
     return <Spin />
   if (!bookings.bookings.length) return <p>No bookings to display</p>
 
-  // console.log("data:", data.rooms)
+  console.log("bookings:", bookings.bookings)
 
   return (
     <Cal

@@ -16,7 +16,6 @@ function createIsomorphLink() {
   } else {
     const { HttpLink } = require("@apollo/client/link/http")
     return new HttpLink({
-      // onError: (err: any) => console.log(err),
       uri: process.env.NEXT_PUBLIC_API_URL,
       // credentials: "same-origin",
     })
@@ -43,11 +42,21 @@ function createApolloClient() {
     link: ApolloLink.from([errorLink, createIsomorphLink()]),
     cache: new InMemoryCache({
       typePolicies: {
-        Room: {
+        Booking: {
           fields: {
             resourceId: {
               read: (_, { readField }) => {
-                return readField("id")
+                return readField("roomId")
+              },
+            },
+            end: {
+              read: (existing) => {
+                return new Date(existing)
+              },
+            },
+            start: {
+              read: (existing) => {
+                return new Date(existing)
               },
             },
           },
