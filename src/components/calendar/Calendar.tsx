@@ -1,14 +1,11 @@
-import { Spin } from "antd"
-
 import { Calendar as Cal, dateFnsLocalizer } from "react-big-calendar"
 
 import { format, parse, startOfWeek, getDay } from "date-fns"
 import enUS from "date-fns/locale/en-US"
 
-import { useQueryBookings, useQueryRooms } from "libs"
 import { EditBookingModal } from "components/ui"
 import { useState } from "react"
-import { Booking } from "typescript"
+import { Booking, Room } from "typescript"
 
 const locales = { "en-US": enUS }
 
@@ -20,10 +17,12 @@ const localizer = dateFnsLocalizer({
   locales,
 })
 
-const Calendar = () => {
-  const { data: rooms, loading: loadingRooms } = useQueryRooms()
-  const { data: bookings, loading: loadingBookings } = useQueryBookings()
+interface ICalendarProps {
+  rooms: Room[]
+  bookings: Booking[]
+}
 
+const Calendar = ({ rooms, bookings }: ICalendarProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [variables, setVariables] = useState<Booking | undefined>(undefined)
 
@@ -36,13 +35,6 @@ const Calendar = () => {
     console.log("onSelectSlot", e)
   }
 
-  if (loadingRooms || !rooms || !Array.isArray(rooms.rooms)) return <Spin />
-  if (!rooms.rooms.length) return <p>No rooms to display</p>
-
-  if (loadingBookings || !bookings || !Array.isArray(bookings.bookings))
-    return <Spin />
-  if (!bookings.bookings.length) return <p>No bookings to display</p>
-
   return (
     <>
       <EditBookingModal
@@ -53,10 +45,10 @@ const Calendar = () => {
         onCancel={() => setIsModalOpen(false)}
       />
       <Cal
-        resources={rooms?.rooms}
+        resources={rooms}
         selectable
         defaultView='day'
-        events={bookings?.bookings}
+        events={bookings}
         localizer={localizer}
         onDoubleClickEvent={onDoubleClickEvent}
         onSelectSlot={onSelectSlot}

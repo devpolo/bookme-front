@@ -1,14 +1,22 @@
 import type { NextPage } from "next"
 
-import { Typography, Space, Button } from "antd"
+import { Typography, Space, Button, Spin } from "antd"
 
-import { useAuth, useQueryRooms } from "libs"
+import { useAuth, useQueryBookings, useQueryRooms } from "libs"
 import { Page, Calendar } from "components"
 
 const { Title, Text } = Typography
 
 const Booking: NextPage = () => {
   const { me, logout } = useAuth()
+  const { data: rooms, loading: loadingRooms } = useQueryRooms()
+  const { data: bookings, loading: loadingBookings } = useQueryBookings()
+
+  if (loadingRooms || !rooms || !Array.isArray(rooms.rooms)) return <Spin />
+  if (!rooms.rooms.length) return <p>No rooms to display</p>
+
+  if (loadingBookings || !bookings || !Array.isArray(bookings.bookings))
+    return <Spin />
 
   return (
     <Page>
@@ -21,7 +29,10 @@ const Booking: NextPage = () => {
         <Button danger onClick={logout}>
           Logout
         </Button>
-        <Calendar />
+        <Calendar
+          rooms={rooms?.rooms || []}
+          bookings={bookings?.bookings || []}
+        />
       </Space>
     </Page>
   )

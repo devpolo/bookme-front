@@ -1,22 +1,39 @@
 import { Dispatch, SetStateAction } from "react"
 
-import {
-  Modal,
-  ModalProps,
-  Form,
-  Input,
-  Button,
-  Radio,
-  Select,
-  Cascader,
-  InputNumber,
-  TreeSelect,
-  Switch,
-  DatePicker,
-} from "antd"
+import { Modal, ModalProps, Form, Input, Button, DatePicker } from "antd"
+
 import moment from "moment"
 
 import { Booking } from "typescript"
+import { useMutation, gql } from "@apollo/client"
+
+const EDIT_BOOKING_MUTATION = gql`
+  mutation updateBooking(
+    $title: String
+    $start: DateTime
+    $end: DateTime
+    $roomId: Float
+    $userId: Float!
+    $id: Float!
+  ) {
+    updateBooking(
+      title: $title
+      start: $start
+      end: $end
+      roomId: $roomId
+      userId: $userId
+      id: $id
+    ) {
+      id
+      roomId
+      userId
+      title
+      end
+      start
+      resourceId @client
+    }
+  }
+`
 
 interface ICalendarProps extends ModalProps {
   variables?: Booking
@@ -30,8 +47,11 @@ const Calendar = ({
   setIsModalOpen,
   ...props
 }: ICalendarProps) => {
-  const onFinish = (values: any) => {
+  const [updateBooking] = useMutation(EDIT_BOOKING_MUTATION)
+
+  const onFinish = async (values: any) => {
     console.log("values", values)
+    await updateBooking({ variables: values })
     setIsModalOpen(false)
     setVariables(undefined)
   }
