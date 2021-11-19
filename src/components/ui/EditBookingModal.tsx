@@ -69,6 +69,7 @@ const Calendar = ({
   }
 
   const onFinish = async (values: any) => {
+    console.log({ values })
     try {
       await updateBooking({
         variables: {
@@ -126,15 +127,10 @@ const Calendar = ({
               Update
             </Button>
           </Form.Item>
-          <Button
-            type='primary'
-            htmlType='submit'
-            danger
-            onClick={deleteBooking}
-          >
-            Remove
-          </Button>
         </Form>
+        <Button type='primary' htmlType='submit' danger onClick={deleteBooking}>
+          Remove
+        </Button>
       </Modal>
     </>
   )

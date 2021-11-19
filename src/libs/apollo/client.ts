@@ -23,17 +23,17 @@ function createIsomorphLink() {
 }
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
-  // if (graphQLErrors) {
-  //   graphQLErrors.map(({ message, path }) => {
-  //     console.log(`[GraphQL error]: Message: ${message} Path: ${path}`)
-  //     message && toast.error(message, { hideProgressBar: true })
-  //   })
-  // }
-  // if (networkError) {
-  //   console.log(`[Network error]: ${networkError}`)
-  //   networkError?.message &&
-  //     toast.error(networkError.message, { hideProgressBar: true })
-  // }
+  if (graphQLErrors) {
+    graphQLErrors.map(({ message, path }) => {
+      console.log(`[GraphQL error]: Message: ${message} Path: ${path}`)
+      message && toast.error(message, { hideProgressBar: true })
+    })
+  }
+  if (networkError) {
+    console.log(`[Network error]: ${networkError}`)
+    networkError?.message &&
+      toast.error(networkError.message, { hideProgressBar: true })
+  }
 })
 
 function createApolloClient() {
