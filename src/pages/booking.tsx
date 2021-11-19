@@ -10,17 +10,11 @@ const { Title, Text } = Typography
 const Booking: NextPage = () => {
   const { me, logout } = useAuth()
   const { data: rooms, loading: loadingRooms } = useQueryRooms()
-  const { data: bookings, loading: loadingBookings } = useQueryBookings()
-
-  if (loadingRooms || !rooms || !Array.isArray(rooms.rooms)) return <Spin />
-  if (!rooms.rooms.length) return <p>No rooms to display</p>
-
-  if (loadingBookings || !bookings || !Array.isArray(bookings.bookings))
-    return <Spin />
+  const { data: bookings } = useQueryBookings()
 
   return (
     <Page>
-      <Space direction='vertical' size='large' style={{ margin: 100 }}>
+      <Space direction='vertical' size='large' style={{ margin: 50 }}>
         <Title>Booking</Title>
         <Text>
           {/* @ts-ignore */}
@@ -30,6 +24,7 @@ const Booking: NextPage = () => {
           Logout
         </Button>
         <Calendar
+          loading={loadingRooms || !rooms || !Array.isArray(rooms.rooms)}
           rooms={rooms?.rooms || []}
           bookings={bookings?.bookings || []}
         />

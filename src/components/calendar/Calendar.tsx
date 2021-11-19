@@ -8,6 +8,7 @@ import { EditBookingModal } from "components/ui"
 import { useState } from "react"
 import { Booking, Room } from "typescript"
 import { QUERY_BOOKINGS, useAuth } from "libs"
+import { Spin } from "antd"
 
 const locales = { "en-US": enUS }
 
@@ -49,9 +50,10 @@ export const CREATE_BOOKING_MUTATION = gql`
 interface ICalendarProps {
   rooms: Room[]
   bookings: Booking[]
+  loading?: boolean
 }
 
-const Calendar = ({ rooms, bookings }: ICalendarProps) => {
+const Calendar = ({ rooms, bookings, loading }: ICalendarProps) => {
   const { me } = useAuth()
   const [createBooking] = useMutation(CREATE_BOOKING_MUTATION, {
     refetchQueries: [{ query: QUERY_BOOKINGS }],
@@ -66,17 +68,22 @@ const Calendar = ({ rooms, bookings }: ICalendarProps) => {
   }
 
   const onSelectSlot = async (event: SlotInfo) => {
-    await createBooking({
-      variables: {
-        // @ts-ignore
-        roomId: event.resourceId,
-        userId: me.id,
-        title: `${me.name}'s meeting`,
-        end: event.end,
-        start: event.start,
-      },
-    })
+    try {
+      await createBooking({
+        variables: {
+          // @ts-ignore
+          roomId: event.resourceId,
+          userId: me.id,
+          title: `${me.name}'s meeting`,
+          end: event.end,
+          start: event.start,
+        },
+      })
+    } catch {}
   }
+
+  if (loading) return <Spin />
+  if (!rooms.length) return <p>No rooms to display</p>
 
   return (
     <>
@@ -96,7 +103,7 @@ const Calendar = ({ rooms, bookings }: ICalendarProps) => {
         localizer={localizer}
         onDoubleClickEvent={onDoubleClickEvent}
         onSelectSlot={onSelectSlot}
-        style={{ height: "40vh", width: "80vw" }}
+        style={{ height: "60vh", width: "80vw" }}
       />
     </>
   )
