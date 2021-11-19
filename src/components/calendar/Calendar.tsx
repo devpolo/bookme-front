@@ -95,10 +95,11 @@ const Calendar = ({ rooms, bookings, loading }: ICalendarProps) => {
         onCancel={() => setIsModalOpen(false)}
       />
       <Cal
+        date={new Date()}
         views={["day"]}
         resources={rooms}
-        min={new Date(new Date().setHours(8))}
-        max={new Date(new Date().setHours(20))}
+        min={new Date(new Date().setHours(8, 0, 0))}
+        max={new Date(new Date().setHours(20, 0, 0))}
         selectable
         defaultView='day'
         events={bookings}

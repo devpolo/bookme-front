@@ -25,3 +25,8 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+div.rbc-toolbar {
+  display: none !important;
+  margin-top: 30px;
+}

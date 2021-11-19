@@ -1,3 +1,4 @@
+import "../styles/globals.css"
 import "antd/dist/antd.css"
 import "react-toastify/dist/ReactToastify.css"
 import "react-big-calendar/lib/css/react-big-calendar.css"
