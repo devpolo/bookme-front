@@ -97,13 +97,15 @@ const Calendar = ({ rooms, bookings, loading }: ICalendarProps) => {
       <Cal
         views={["day"]}
         resources={rooms}
+        min={new Date(new Date().setHours(8))}
+        max={new Date(new Date().setHours(20))}
         selectable
         defaultView='day'
         events={bookings}
         localizer={localizer}
         onDoubleClickEvent={onDoubleClickEvent}
         onSelectSlot={onSelectSlot}
-        style={{ height: "60vh", width: "85vw" }}
+        style={{ height: "80vh", width: "85vw" }}
       />
     </>
   )
