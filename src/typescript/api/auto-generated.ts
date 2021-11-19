@@ -132,7 +132,7 @@ export type QueryUserArgs = {
 
 export type Room = {
   __typename?: 'Room';
-  bookings?: Maybe<Array<Booking>>;
+  bookings: Array<Booking>;
   id: Scalars['Int'];
   title: Scalars['String'];
 };
@@ -143,7 +143,7 @@ export type UpdateBookingInput = {
   roomId?: InputMaybe<Scalars['Float']>;
   start?: InputMaybe<Scalars['DateTime']>;
   title?: InputMaybe<Scalars['String']>;
-  userId: Scalars['Float'];
+  userId?: InputMaybe<Scalars['Float']>;
 };
 
 export type UpdateUserInput = {
@@ -153,7 +153,7 @@ export type UpdateUserInput = {
 
 export type User = {
   __typename?: 'User';
-  bookings?: Maybe<Array<Booking>>;
+  bookings: Array<Booking>;
   id: Scalars['Int'];
   name: Scalars['String'];
 };

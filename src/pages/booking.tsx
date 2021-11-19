@@ -1,28 +1,22 @@
 import type { NextPage } from "next"
 
-import { Typography, Space, Button, Spin } from "antd"
+import { Space } from "antd"
 
-import { useAuth, useQueryBookings, useQueryRooms } from "libs"
-import { Page, Calendar } from "components"
-
-const { Title, Text } = Typography
+import { useQueryBookings, useQueryRooms } from "libs"
+import { Page, Calendar, Header } from "components"
 
 const Booking: NextPage = () => {
-  const { me, logout } = useAuth()
   const { data: rooms, loading: loadingRooms } = useQueryRooms()
   const { data: bookings } = useQueryBookings()
 
   return (
     <Page>
-      <Space direction='vertical' size='large' style={{ margin: 50 }}>
-        <Title>Booking</Title>
-        <Text>
-          {/* @ts-ignore */}
-          Hello <b>{me.name}</b>. Your id is: <b>{me.id}</b>.
-        </Text>
-        <Button danger onClick={logout}>
-          Logout
-        </Button>
+      <Header title='Cola Day' />
+      <Space
+        direction='vertical'
+        size='large'
+        style={{ marginLeft: 50, marginRight: 50 }}
+      >
         <Calendar
           loading={loadingRooms || !rooms || !Array.isArray(rooms.rooms)}
           rooms={rooms?.rooms || []}

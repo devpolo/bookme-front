@@ -95,7 +95,7 @@ const Calendar = ({ rooms, bookings, loading }: ICalendarProps) => {
         onCancel={() => setIsModalOpen(false)}
       />
       <Cal
-        views={["day", "week"]}
+        views={["day"]}
         resources={rooms}
         selectable
         defaultView='day'
@@ -103,7 +103,7 @@ const Calendar = ({ rooms, bookings, loading }: ICalendarProps) => {
         localizer={localizer}
         onDoubleClickEvent={onDoubleClickEvent}
         onSelectSlot={onSelectSlot}
-        style={{ height: "60vh", width: "80vw" }}
+        style={{ height: "60vh", width: "85vw" }}
       />
     </>
   )

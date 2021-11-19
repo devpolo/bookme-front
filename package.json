@@ -9,6 +9,7 @@
     "postinstall": "yarn graphql-codegen -r dotenv/config"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@apollo/client": "^3.4.17",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-less": "^1.0.1",
