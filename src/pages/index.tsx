@@ -20,7 +20,7 @@ const img = buildUrl(
 const Login: NextPage = () => {
   const router = useRouter()
 
-  const { login } = useAuth()
+  const { login, loading } = useAuth()
 
   const onFinish = async ({ name }: IInputs) => {
     try {
@@ -51,7 +51,7 @@ const Login: NextPage = () => {
                 <Input placeholder='Your name' />
               </Form.Item>
               <Form.Item>
-                <Button type='primary' htmlType='submit'>
+                <Button type='primary' htmlType='submit' loading={loading}>
                   Login
                 </Button>
               </Form.Item>

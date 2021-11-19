@@ -12,6 +12,7 @@ interface IAuthHookResponse {
   me: User
   login: (name: string) => void
   logout: () => void
+  loading: boolean
 }
 
 const LOGIN_MUTATION = gql`
@@ -26,7 +27,7 @@ const LOGIN_MUTATION = gql`
 const connectedUser: ReactiveVar<TUser> = makeVar({})
 
 export const useAuth = (): IAuthHookResponse => {
-  const [readOrCreateUser] = useMutation(LOGIN_MUTATION)
+  const [readOrCreateUser, { loading }] = useMutation(LOGIN_MUTATION)
   const router = useRouter()
 
   const login = async (name: string): Promise<void> => {
@@ -53,5 +54,5 @@ export const useAuth = (): IAuthHookResponse => {
   }, [user])
 
   // @ts-ignore
-  return { me: connectedUser(), login, logout }
+  return { me: connectedUser(), login, logout, loading }
 }
